@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>相心 - 观其面，知其心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: {
+                            950: '#0a0a0a',
+                            900: '#121212',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                        },
+                        cinnabar: {
+                            DEFAULT: '#962828',
+                            dark: '#7a1f1f',
+                            light: '#b33b3b'
+                        },
+                        bronze: {
+                            DEFAULT: '#C5A059',
+                            light: '#D4B475',
+                            dark: '#9E7D41'
+                        },
+                        jade: {
+                            DEFAULT: '#E0F2F1',
+                            accent: '#4DB6AC'
+                        }
+                    },
+                    backgroundImage: {
+                        'ink-gradient': 'radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto+Sans+SC', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
+        }
+        
+        .serif-font { font-family: 'Noto+Serif+SC', serif; }
+        
+        .scan-line-enso {
+            animation: rotate-enso 4s linear infinite;
+        }
+        
+        @keyframes rotate-enso {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .glass-panel {
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(197, 160, 89, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        /* Subtle ink wash effect */
+        .ink-wash {
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>

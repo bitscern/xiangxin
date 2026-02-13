@@ -1,0 +1,7 @@
+{
+  "name": "相心 (PhysioLogic AI)",
+  "description": "一款融合中国传统面相学与现代心理学风险评估的高端人工智能面部分析应用。",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
