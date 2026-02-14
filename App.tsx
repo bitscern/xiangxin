@@ -29,7 +29,7 @@ const App: React.FC = () => {
         await videoRef.current.play();
       }
     } catch (err: any) {
-      setError('镜鉴开启受阻。请确保授权摄像头访问，并在安全协议环境下运行。');
+      setError('镜鉴开启受阻。请确保授权摄像头访问，并在安全协议(HTTPS)环境下运行。');
       setView('home');
     }
   };
@@ -61,10 +61,11 @@ const App: React.FC = () => {
       if (!ctx) throw new Error('画卷受损');
       
       ctx.drawImage(video, 0, 0);
-      const base64Image = canvas.toDataURL('image/jpeg', 0.8);
-      setCapturedImage(base64Image);
+      const base64Data = canvas.toDataURL('image/jpeg', 0.8);
+      setCapturedImage(base64Data);
       
-      const result = await analyzeFace(base64Image.split(',')[1]);
+      // 仅发送 Base64 数据部分
+      const result = await analyzeFace(base64Data.split(',')[1]);
       setAnalysisResult(result);
       setView('report');
       stopCamera();
@@ -90,7 +91,7 @@ const App: React.FC = () => {
           setAnalysisResult(result);
           setView('report');
         } catch (err: any) {
-          setError('相片难辨，请确保面部清晰。');
+          setError(err.message || '相片难辨，请确保面部清晰。');
           setView('home');
         } finally {
           setIsScanning(false);
@@ -108,8 +109,8 @@ const App: React.FC = () => {
             <span className="text-white font-bold -rotate-45 serif-font">相</span>
           </div>
           <div>
-            <h1 className="text-base font-bold text-white serif-font tracking-widest">相心</h1>
-            <p className="text-[8px] text-bronze tracking-[0.2em] uppercase opacity-60">面相灵鉴 · 心性推演</p>
+            <h1 className="text-base font-bold text-white serif-font tracking-widest uppercase">相心</h1>
+            <p className="text-[8px] text-bronze tracking-[0.2em] uppercase opacity-60">PhysioLogic AI · 灵鉴中心</p>
           </div>
         </div>
 
@@ -131,7 +132,7 @@ const App: React.FC = () => {
 
       <main className="flex-1 pt-20">
         {error && (
-          <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[60] w-[90%] max-w-md p-4 bg-cinnabar/10 border border-cinnabar/20 text-cinnabar text-[10px] text-center serif-font">
+          <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[60] w-[90%] max-w-md p-4 bg-cinnabar/10 border border-cinnabar/20 text-cinnabar text-[10px] text-center serif-font animate-pulse rounded-md">
             {error}
           </div>
         )}
@@ -141,14 +142,14 @@ const App: React.FC = () => {
             <section className="min-h-[90vh] flex flex-col items-center justify-center text-center px-6 py-20">
                <div className="space-y-8 max-w-4xl">
                   <div className="inline-block px-4 py-1 border border-bronze/20 bg-bronze/5 rounded-full text-[10px] text-bronze font-bold tracking-[0.3em] mb-4">
-                    传统相法与演化心性之灵鉴
+                    火山方舟大模型驱动 · 传统相法与演化心性之结合
                   </div>
                   <h2 className="text-5xl md:text-8xl font-black text-white leading-[1.1] serif-font tracking-tight">
                     观其<span className="text-bronze">面</span>，<br className="md:hidden" />
                     知其<span className="text-cinnabar">心</span>。
                   </h2>
                   <p className="text-lg md:text-2xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed serif-font px-4">
-                    参详眉宇间的五行玄机，探寻心性深处的根基。
+                    探寻面部纹路下的性格，参详眉宇间的五行玄机。
                   </p>
                   
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-10">
@@ -182,7 +183,7 @@ const App: React.FC = () => {
                    <div className="w-16 h-16 border-2 border-bronze/30 border-t-bronze rounded-full animate-spin"></div>
                    <div className="text-center">
                       <p className="text-white font-bold serif-font tracking-[0.3em] mb-1">正在谛听</p>
-                      <p className="text-[9px] text-slate-500 uppercase tracking-widest">师门灵鉴进行中</p>
+                      <p className="text-[9px] text-slate-500 uppercase tracking-widest">灵鉴进行中</p>
                    </div>
                 </div>
               )}
@@ -222,12 +223,12 @@ const App: React.FC = () => {
       <footer className="py-20 border-t border-white/5 bg-ink-950/20 text-center px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="text-left space-y-2">
-            <div className="text-white font-bold serif-font tracking-widest">相心 (PhysioLogic Ark)</div>
+            <div className="text-white font-bold serif-font tracking-widest">相心 (PhysioLogic AI)</div>
             <p className="text-slate-500 text-[10px] leading-relaxed max-w-xs">
-              基于前沿科技的传统文化灵鉴应用。非医疗诊断，仅供娱乐参考与心性探索。
+              基于火山方舟大模型的传统文化探索应用。非医疗诊断，仅供娱乐与心性参考。
             </p>
           </div>
-          <p className="text-slate-600 text-[10px]">© 2024 相心 · 灵鉴内核驱动</p>
+          <p className="text-slate-600 text-[10px]">© 2024 相心 · 火山方舟引擎驱动</p>
         </div>
       </footer>
     </div>

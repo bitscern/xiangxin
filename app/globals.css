@@ -1,0 +1,35 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink-950: #0a0a0a;
+  --cinnabar: #962828;
+  --bronze: #C5A059;
+}
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background-color: #0a0a0a;
+  color: #e5e5e5;
+  background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
+  overflow-x: hidden;
+}
+
+.serif-font { font-family: 'Noto Serif SC', serif; }
+
+.glass-panel {
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(197, 160, 89, 0.1);
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at top right, rgba(150, 40, 40, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at bottom left, rgba(197, 160, 89, 0.1) 0%, transparent 50%);
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+}
