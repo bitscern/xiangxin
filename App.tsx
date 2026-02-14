@@ -1,18 +1,40 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { AppView, AnalysisResult } from './types';
 import { analyzeFace } from './services/arkService';
 import ScannerOverlay from './components/ScannerOverlay';
 import AnalysisReport from './components/AnalysisReport';
 
+const SCANNING_STEPS = [
+  "正在开启灵鉴镜...",
+  "观测天庭、地阁气韵...",
+  "拆解五岳格局...",
+  "溯源因果心性...",
+  "正在誊写宗师判词..."
+];
+
 const App: React.FC = () => {
   const [view, setView] = useState<AppView>('home');
   const [isScanning, setIsScanning] = useState(false);
+  const [scanningStep, setScanningStep] = useState(0);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // 模拟动态步进文案
+  useEffect(() => {
+    // Fix: Use 'any' type for interval to avoid NodeJS namespace error in browser environment
+    let interval: any;
+    if (isScanning) {
+      interval = setInterval(() => {
+        setScanningStep(prev => (prev + 1) % SCANNING_STEPS.length);
+      }, 2000);
+    }
+    return () => clearInterval(interval);
+  }, [isScanning]);
 
   const startCamera = async () => {
     setView('scanner');
@@ -41,10 +63,6 @@ const App: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    return () => stopCamera();
-  }, []);
-
   const captureAndAnalyze = async () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -72,6 +90,7 @@ const App: React.FC = () => {
       video.play().catch(() => {});
     } finally {
       setIsScanning(false);
+      setScanningStep(0);
     }
   };
 
@@ -93,6 +112,7 @@ const App: React.FC = () => {
           setView('home');
         } finally {
           setIsScanning(false);
+          setScanningStep(0);
         }
       };
       reader.readAsDataURL(file);
@@ -140,7 +160,7 @@ const App: React.FC = () => {
             <section className="min-h-[90vh] flex flex-col items-center justify-center text-center px-6 py-20">
                <div className="space-y-8 max-w-4xl">
                   <div className="inline-block px-4 py-1 border border-bronze/20 bg-bronze/5 rounded-full text-[10px] text-bronze font-bold tracking-[0.3em] mb-4">
-                    火山方舟大模型驱动 · 传统相法与演化心性之结合
+                    Gemini 3 深度引擎 · 融合传统相理与演化心理学
                   </div>
                   <h2 className="text-5xl md:text-8xl font-black text-white leading-[1.1] serif-font tracking-tight">
                     观其<span className="text-bronze">面</span>，<br className="md:hidden" />
@@ -155,7 +175,7 @@ const App: React.FC = () => {
                       onClick={startCamera}
                       className="w-full sm:w-auto px-16 py-5 bg-cinnabar text-white text-lg font-bold rounded-sm shadow-2xl hover:scale-105 transition-transform serif-font tracking-[0.2em]"
                     >
-                      即刻灵鉴
+                      开启镜鉴
                     </button>
                     <label className="w-full sm:w-auto px-16 py-5 bg-white/5 border border-white/10 text-slate-300 text-lg font-bold rounded-sm hover:bg-white/10 transition-colors cursor-pointer serif-font tracking-[0.2em]">
                       传其法相
@@ -177,11 +197,17 @@ const App: React.FC = () => {
               )}
               <ScannerOverlay />
               {isScanning && (
-                <div className="absolute inset-0 bg-ink-950/80 flex flex-col items-center justify-center space-y-6">
-                   <div className="w-16 h-16 border-2 border-bronze/30 border-t-bronze rounded-full animate-spin"></div>
+                <div className="absolute inset-0 bg-ink-950/90 flex flex-col items-center justify-center space-y-8">
+                   <div className="relative w-24 h-24">
+                      <div className="absolute inset-0 border-2 border-bronze/20 rounded-full"></div>
+                      <div className="absolute inset-0 border-2 border-bronze border-t-transparent rounded-full animate-spin"></div>
+                      <div className="absolute inset-0 flex items-center justify-center text-[10px] text-bronze font-bold">鉴定中</div>
+                   </div>
                    <div className="text-center">
-                      <p className="text-white font-bold serif-font tracking-[0.3em] mb-1">正在谛听</p>
-                      <p className="text-[9px] text-slate-500 uppercase tracking-widest">灵鉴进行中</p>
+                      <p className="text-white text-xl font-bold serif-font tracking-[0.3em] mb-2 animate-pulse">
+                        {SCANNING_STEPS[scanningStep]}
+                      </p>
+                      <p className="text-[9px] text-slate-500 uppercase tracking-[0.5em]">Arcane Analysis in Progress</p>
                    </div>
                 </div>
               )}
@@ -223,10 +249,10 @@ const App: React.FC = () => {
           <div className="text-left space-y-2">
             <div className="text-white font-bold serif-font tracking-widest">相心 (PhysioLogic AI)</div>
             <p className="text-slate-500 text-[10px] leading-relaxed max-w-xs">
-              基于火山方舟大模型的传统文化探索应用。非医疗诊断，仅供娱乐与心性参考。
+              Gemini 3 引擎驱动，深度融合传统相理与现代心性推演。
             </p>
           </div>
-          <p className="text-slate-600 text-[10px]">© 2024 相心 · 火山方舟引擎驱动</p>
+          <p className="text-slate-600 text-[10px]">© 2024 相心 · Gemini API 驱动</p>
         </div>
       </footer>
     </div>

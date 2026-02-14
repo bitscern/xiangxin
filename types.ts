@@ -7,6 +7,12 @@ export enum FiveElement {
   WATER = "水"
 }
 
+export interface Observation {
+  feature: string;
+  description: string;
+  significance: string;
+}
+
 export interface PalaceData {
   name: string;
   status: string;
@@ -35,7 +41,7 @@ export interface WorkplaceData {
 
 export interface MoleData {
   position: string;
-  nature: string; // 吉 / 凶 / 平
+  nature: string;
   meaning: string;
 }
 
@@ -43,6 +49,11 @@ export interface AnalysisResult {
   score: number;
   fiveElement: FiveElement;
   elementAnalysis: string;
+  masterInsight: {
+    poem: string;
+    summary: string;
+  };
+  observations: Observation[];
   palaces: PalaceData[];
   riskMetrics: RiskMetric[];
   karma: KarmaData;
