@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '相心 (PhysioLogic AI) - 观其面，知其心',
-  description: '一款融合中国传统面相学与现代心理学风险评估的高端人工智能面部分析应用。',
+  description: '观其面，知其心；探寻面部纹路下的性格。融合中国传统面相学与现代人工智能。',
 };
 
 export default function RootLayout({

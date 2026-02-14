@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { AppView, AnalysisResult } from './types';
 import { analyzeFace } from './services/arkService';
@@ -64,7 +63,6 @@ const App: React.FC = () => {
       const base64Data = canvas.toDataURL('image/jpeg', 0.8);
       setCapturedImage(base64Data);
       
-      // 仅发送 Base64 数据部分
       const result = await analyzeFace(base64Data.split(',')[1]);
       setAnalysisResult(result);
       setView('report');
@@ -110,7 +108,7 @@ const App: React.FC = () => {
           </div>
           <div>
             <h1 className="text-base font-bold text-white serif-font tracking-widest uppercase">相心</h1>
-            <p className="text-[8px] text-bronze tracking-[0.2em] uppercase opacity-60">PhysioLogic AI · 灵鉴中心</p>
+            <p className="text-[8px] text-bronze tracking-[0.2em] uppercase opacity-60">PhysioLogic AI · 观其面，知其心</p>
           </div>
         </div>
 
@@ -149,7 +147,7 @@ const App: React.FC = () => {
                     知其<span className="text-cinnabar">心</span>。
                   </h2>
                   <p className="text-lg md:text-2xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed serif-font px-4">
-                    探寻面部纹路下的性格，参详眉宇间的五行玄机。
+                    观其面，知其心；探寻面部纹路下的性格。
                   </p>
                   
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-10">
@@ -157,7 +155,7 @@ const App: React.FC = () => {
                       onClick={startCamera}
                       className="w-full sm:w-auto px-16 py-5 bg-cinnabar text-white text-lg font-bold rounded-sm shadow-2xl hover:scale-105 transition-transform serif-font tracking-[0.2em]"
                     >
-                      镜鉴起卦
+                      即刻灵鉴
                     </button>
                     <label className="w-full sm:w-auto px-16 py-5 bg-white/5 border border-white/10 text-slate-300 text-lg font-bold rounded-sm hover:bg-white/10 transition-colors cursor-pointer serif-font tracking-[0.2em]">
                       传其法相
